@@ -1,0 +1,76 @@
+<component name="Manager" kind="active" namespace="Ref">
+    <import_port_type>Ref/ManagerPorts/ManagerOpPortAi.xml</import_port_type>
+    <import_port_type>Ref/ManagerPorts/ResultPortAi.xml</import_port_type>
+<import_port_type>Ref/ManagerPorts/SchedulerPortAi.xml</import_port_type>
+    <comment>Component sending a math operation</comment>
+    <ports>
+        <port name="driverOut" data_type="Ref::ManagerOp" kind="output">
+            
+        </port>
+        <port name="managerIn" data_type="Ref::Result" kind="async_input">
+            
+        </port>
+	<port name="schedulerIn" data_type="Ref::Scheduler" kind="async_input">
+            
+        </port>
+    </ports>
+    <commands>
+        <command kind="async" opcode="0" mnemonic="MGR_IS_ENABLED">
+            <comment>
+            Do a math operation
+            </comment>
+            <args>
+                <arg name="isEnabled" type="bool">
+                    
+                </arg>          
+             </args>
+        </command>
+    </commands>
+    <telemetry>
+        <channel id="0" name="MGR_IS_ENABLED" data_type="bool">
+            <comment>
+            The first value
+            </comment>
+        </channel>
+        <channel id="1" name="MGR_MSG" data_type="F32">
+            <comment>
+            The second value
+            </comment>
+        </channel>
+        
+    </telemetry>
+    <events>
+        <event id="0" name="MGR_MSG_RECV" severity="ACTIVITY_LO" format_string="Mgr Msg Recvd: %b"  >
+            <args>
+                <arg name="messageRecv" type="bool">
+                    <comment>The val1 argument</comment>
+                </arg>          
+                          
+            </args>
+        </event>
+        <event id="1" name="MGR_MSG_SENT" severity="ACTIVITY_LO" format_string="Mgr Msg Sent: %b"  >
+            <args>
+                <arg name="messageSent" type="bool">
+                    <comment>The val1 argument</comment>
+                </arg>          
+                          
+            </args>
+        </event>
+	<event id="2" name="MGR_MSG_BLCKD" severity="ACTIVITY_LO" format_string="Mgr Msg Blckd: %b"  >
+            <args>
+                <arg name="messageBlckd" type="bool">
+                    <comment>The val1 argument</comment>
+                </arg>          
+                          
+            </args>
+        </event>
+<event id="3" name="DRVR_MSG_RECV" severity="ACTIVITY_LO" format_string="Drvr Msg Recvd: %b"  >
+            <args>
+                <arg name="message" type="F32">
+                    <comment>The val1 argument</comment>
+                </arg>          
+                          
+            </args>
+        </event>
+    </events>
+</component>

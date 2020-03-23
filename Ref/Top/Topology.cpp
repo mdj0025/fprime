@@ -140,6 +140,7 @@ Ref::PingReceiverComponentImpl pingRcvr
 #endif
 ;
 
+
 Svc::FileUplink fileUplink ("fileUplink");
 Svc::FileDownlink fileDownlink ("fileDownlink", DOWNLINK_PACKET_SIZE);
 Svc::BufferManager fileDownlinkBufferManager("fileDownlinkBufferManager", DOWNLINK_BUFFER_STORE_SIZE, DOWNLINK_BUFFER_QUEUE_SIZE);
@@ -171,6 +172,7 @@ Ref::SignalGen SG5
 #endif
 ;
 
+
 Svc::AssertFatalAdapterComponentImpl fatalAdapter
 #if FW_OBJECT_NAMES == 1
 ("fatalAdapter")
@@ -183,6 +185,24 @@ Svc::FatalHandlerComponentImpl fatalHandler
 #endif
 ;
 
+
+Ref::ManagerComponentImpl manager
+#if FW_OBJECT_NAMES == 1
+    ("manager")
+#endif
+;
+
+Ref::DriverComponentImpl driver
+#if FW_OBJECT_NAMES == 1
+    ("driver")
+#endif
+;
+
+Ref::SchedulerComponentImpl scheduler
+#if FW_OBJECT_NAMES == 1
+    ("scheduler")
+#endif
+;
 
 #if FW_OBJECT_REGISTRATION == 1
 
@@ -253,6 +273,10 @@ void constructApp(int port_number, char* hostname) {
 	fatalHandler.init(0);
 	health.init(25,0);
 	pingRcvr.init(10);
+	
+    manager.init(10,0);
+    driver.init(10);
+    scheduler.init(10,0);
     // Connect rate groups to rate group driver
     constructRefArchitecture();
 
@@ -271,11 +295,16 @@ void constructApp(int port_number, char* hostname) {
 	SG5.regCommands();
 	health.regCommands();
 	pingRcvr.regCommands();
-
+	manager.regCommands();
+//	driver.regCommands();
+	scheduler.regCommands();
     // read parameters
     prmDb.readParamFile();
     recvBuffComp.loadParameters();
     sendBuffComp.loadParameters();
+	//manager.loadParameters();
+	//scheduler.loadParameters();
+	//driver.loadParameters();
 
     // set health ping entries
 
@@ -316,6 +345,9 @@ void constructApp(int port_number, char* hostname) {
     fileUplink.start(0, 100, 10*1024);
 
     pingRcvr.start(0, 100, 10*1024);
+    manager.start(0, 100, 10*1024);
+    scheduler.start(0, 100, 10*1024);
+    //driver.start(0, 100, 10*1024);
 
     // Initialize socket server
     sockGndIf.startSocketTask(100, 10*1024, port_number, hostname, Svc::SocketGndIfImpl::SEND_UDP);
@@ -367,6 +399,10 @@ void exitTasks(void) {
     fileUplink.exit();
     fileDownlink.exit();
     cmdSeq.exit();
+    manager.exit();
+   // driver.exit();
+    scheduler.exit();
+
 }
 
 void print_usage() {

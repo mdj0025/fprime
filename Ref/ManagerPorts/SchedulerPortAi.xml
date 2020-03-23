@@ -1,0 +1,10 @@
+<interface name="Scheduler" namespace="Ref">
+    <comment>
+    Port to return the result of a math operation
+    </comment>
+    <args>
+        <arg name="message" type="F32">
+            <comment>the result of the operation</comment>
+        </arg>
+    </args>
+</interface>

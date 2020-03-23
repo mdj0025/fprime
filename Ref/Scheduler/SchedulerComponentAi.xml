@@ -1,0 +1,29 @@
+<component name="Scheduler" kind="active" namespace="Ref">
+    <import_port_type>Ref/ManagerPorts/SchedulerPortAi.xml</import_port_type>
+
+    <comment>Component sending a math operation</comment>
+    <ports>
+        <port name="schedulerOut" data_type="Ref::Scheduler" kind="output">
+        </port>
+    </ports>
+     <commands>
+        <command kind="async" opcode="0" mnemonic="SCHEDULE">
+            <comment>
+            Schedule a command
+            </comment>
+            <args>
+                <arg name="time" type="F32">
+                    
+                </arg>          
+             </args>
+        </command>
+    </commands>
+    <telemetry>
+        <channel id="0" name="SCHED_SENT" data_type="bool">
+            <comment>
+            The second value
+            </comment>
+        </channel>
+        
+    </telemetry>
+</component>

@@ -29,6 +29,9 @@
 	<import_component_type>Drv/BlockDriver/BlockDriverComponentAi.xml</import_component_type>
 	<import_component_type>Svc/FileDownlink/FileDownlinkComponentAi.xml</import_component_type>
 	<import_component_type>Svc/PassiveTextLogger/PassiveTextLoggerComponentAi.xml</import_component_type>
+    <import_component_type>Ref/Manager/ManagerComponentAi.xml</import_component_type>
+    <import_component_type>Ref/Driver/DriverComponentAi.xml</import_component_type>
+    <import_component_type>Ref/Scheduler/SchedulerComponentAi.xml</import_component_type>
 
    <instance namespace="Svc" name="fatalHandler" type="FatalHandler" base_id="1"  base_id_window="20" />
 
@@ -85,6 +88,9 @@
    <instance namespace="Svc" name="fileDownlink" type="FileDownlink" base_id="501"  base_id_window="20" />
 
    <instance namespace="Svc" name="textLogger" type="PassiveTextLogger" base_id="521"  base_id_window="20" />
+   <instance namespace="Ref" name="manager" type="Manager" base_id="1000"  base_id_window="20" />
+   <instance namespace="Ref" name="driver" type="Driver" base_id="1100"  base_id_window="20" />
+   <instance namespace="Ref" name="scheduler" type="Scheduler" base_id="1400"  base_id_window="20" />
 
 
 <connection name = "Connection1">
@@ -807,4 +813,127 @@
 	 <source component = "cmdSeq" port = "cmdRegOut" type = "CmdReg" num = "0"/>
  	 <target component = "cmdDisp" port = "compCmdReg" type = "CmdReg" num = "13"/>
 </connection>
+<!-- Command Registration Ports - Registration port number must match dispatch port for each component -->
+<connection name = "ManagerReg">
+        <source component = "manager" port = "CmdReg" type = "CmdReg" num = "0"/>
+        <target component = "cmdDisp" port = "compCmdReg" type = "CmdReg" num = "20"/>
+   </connection>
+<connection name = "DriverReg">
+        <source component = "driver" port = "CmdReg" type = "CmdReg" num = "0"/>
+        <target component = "cmdDisp" port = "compCmdReg" type = "CmdReg" num = "21"/>
+   </connection>
+<connection name = "SchedulerReg">
+        <source component = "scheduler" port = "CmdReg" type = "CmdReg" num = "0"/>
+        <target component = "cmdDisp" port = "compCmdReg" type = "CmdReg" num = "22"/>
+   </connection>
+   <!-- Command Dispatch Ports - Dispatch port number must match registration port for each component -->
+<connection name = "ManagerDisp">
+        <source component = "cmdDisp" port = "compCmdSend" type = "Cmd" num = "20"/>
+        <target component = "driver" port = "CmdDisp" type = "Cmd" num = "0"/>
+   </connection>
+<connection name = "DriverDisp">
+        <source component = "cmdDisp" port = "compCmdSend" type = "Cmd" num = "21"/>
+        <target component = "manager" port = "CmdDisp" type = "Cmd" num = "0"/>
+   </connection>
+<connection name = "SchedulerDisp">
+        <source component = "cmdDisp" port = "compCmdSend" type = "Cmd" num = "22"/>
+        <target component = "manager" port = "CmdDisp" type = "Cmd" num = "0"/>
+   </connection>
+<!-- Command Reply Ports - Go to the same response port on the dispatcher -->
+
+   <connection name = "ManagerReply">
+      <source component = "manager" port = "CmdStatus" type = "CmdResponse" num = "0"/>
+      <target component = "cmdDisp" port = "compCmdStat" type = "CmdResponse" num = "0"/>
+   </connection>
+<connection name = "DriverReply">
+      <source component = "driver" port = "CmdStatus" type = "CmdResponse" num = "0"/>
+      <target component = "cmdDisp" port = "compCmdStat" type = "CmdResponse" num = "0"/>
+   </connection>
+<connection name = "SchedulerReply">
+      <source component = "scheduler" port = "CmdStatus" type = "CmdResponse" num = "0"/>
+      <target component = "cmdDisp" port = "compCmdStat" type = "CmdResponse" num = "0"/>
+   </connection>
+   <!-- Event Logger Binary Connections -->
+<connection name = "ManagerLog">
+       <source component = "manager" port = "Log" type = "Log" num = "0"/>
+        <target component = "eventLogger" port = "LogRecv" type = "Log" num = "0"/>
+   </connection>
+<connection name = "DriverLog">
+       <source component = "driver" port = "Log" type = "Log" num = "0"/>
+        <target component = "eventLogger" port = "LogRecv" type = "Log" num = "0"/>
+   </connection>
+<connection name = "SchedulerLog">
+       <source component = "scheduler" port = "Log" type = "Log" num = "0"/>
+        <target component = "eventLogger" port = "LogRecv" type = "Log" num = "0"/>
+   </connection>
+   <!-- Event Logger Text Connections -->
+<connection name = "ManagerTextLog">
+       <source component = "manager" port = "LogText" type = "LogText" num = "0"/>
+        <target component = "textLogger" port = "TextLogger" type = "LogText" num = "0"/>
+   </connection>
+<connection name = "DriverTextLog">
+       <source component = "driver" port = "LogText" type = "LogText" num = "0"/>
+        <target component = "textLogger" port = "TextLogger" type = "LogText" num = "0"/>
+   </connection>
+<connection name = "SchedulerTextLog">
+       <source component = "scheduler" port = "LogText" type = "LogText" num = "0"/>
+        <target component = "textLogger" port = "TextLogger" type = "LogText" num = "0"/>
+   </connection>
+   <!-- Telemetry Connections -->
+<connection name = "ManagerTextTlm">
+       <source component = "manager" port = "Tlm" type = "Tlm" num = "0"/>
+        <target component = "chanTlm" port = "TlmRecv" type = "Tlm" num = "0"/>
+   </connection>
+<connection name = "SchedulerTextTlm">
+       <source component = "scheduler" port = "Tlm" type = "Tlm" num = "0"/>
+        <target component = "chanTlm" port = "TlmRecv" type = "Tlm" num = "0"/>
+   </connection>
+<connection name = "DriverTextTlm">
+       <source component = "driver" port = "Tlm" type = "Tlm" num = "0"/>
+        <target component = "chanTlm" port = "TlmRecv" type = "Tlm" num = "0"/>
+   </connection>
+   <!-- Parameter Connections -->
+<connection name = "ManagerPrmGet">
+       <source component = "manager" port = "ParamGet" type = "PrmGet" num = "0"/>
+        <target component = "prmDb" port = "getPrm" type = "PrmGet" num = "0"/>
+   </connection>
+   <connection name = "ManagerPrmSet">
+       <source component = "manager" port = "ParamSet" type = "PrmSet" num = "0"/>
+        <target component = "prmDb" port = "setPrm" type = "PrmSet" num = "0"/>
+   </connection>
+   <!-- Time Connections -->
+<connection name = "ManagerTime">
+       <source component = "manager" port = "Time" type = "Time" num = "0"/>
+        <target component = "linuxTime" port = "timeGetPort" type = "Time" num = "0"/>
+   </connection>
+<connection name = "DriverTime">
+       <source component = "driver" port = "Time" type = "Time" num = "0"/>
+        <target component = "linuxTime" port = "timeGetPort" type = "Time" num = "0"/>
+   </connection>
+<connection name = "SchedulerTime">
+       <source component = "scheduler" port = "Time" type = "Time" num = "0"/>
+        <target component = "linuxTime" port = "timeGetPort" type = "Time" num = "0"/>
+   </connection>
+
+ <!-- Scheduler Connection -->
+    <connection name = "DriverRG">
+         <source component = "rateGroup1Comp" port = "RateGroupMemberOut" type = "Sched" num = "3"/>
+         <target component = "driver" port = "SchedIn" type = "Sched" num = "0"/>
+    </connection>
+<!-- Connection -->
+   <connection name = "SchedulerInConnection">
+       <source component = "scheduler" port = "schedulerOut" type = "Ref::Scheduler" num = "0"/>
+        <target component = "manager" port = "schedulerIn" type = "Ref::Scheduler" num = "0"/>
+   </connection>
+
+<connection name = "DriverInConnection">
+       <source component = "manager" port = "driverOut" type = "Ref::ManagerOp" num = "0"/>
+        <target component = "driver" port = "driverIn" type = "Ref::ManagerOp" num = "0"/>
+   </connection>
+
+<connection name = "DriverOutConnection">
+       <source component = "driver" port = "managerOut" type = "Ref::Result" num = "0"/>
+        <target component = "manager" port = "managerIn" type = "Ref::Result" num = "0"/>
+   </connection>
+
 </assembly>

@@ -1,0 +1,33 @@
+<component name="Driver" kind="passive" namespace="Ref">
+    <import_port_type>Ref/ManagerPorts/ManagerOpPortAi.xml</import_port_type>
+    <import_port_type>Ref/ManagerPorts/ResultPortAi.xml</import_port_type>
+
+    <comment>Component sending a math operation</comment>
+    <ports>
+        <port name="driverIn" data_type="Ref::ManagerOp" kind="sync_input">
+            
+        </port>
+        <port name="managerOut" data_type="Ref::Result" kind="output">
+       </port>
+    </ports>
+    
+    <telemetry>
+        <channel id="1" name="MGR_MSG" data_type="F32">
+            <comment>
+            The second value
+            </comment>
+        </channel>
+        
+    </telemetry>
+    <events>
+        <event id="0" name="MGR_MSG_RECV" severity="ACTIVITY_LO" format_string="Drvr Msg Sent: %b"  >
+            <args>
+                <arg name="message" type="F32">
+                    <comment>The val1 argument</comment>
+                </arg>          
+                          
+            </args>
+        </event>
+        
+    </events>
+</component>

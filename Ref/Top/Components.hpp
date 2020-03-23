@@ -28,6 +28,10 @@ void exitTasks(void);
 #include <Svc/AssertFatalAdapter/AssertFatalAdapterComponentImpl.hpp>
 #include <Svc/FatalHandler/FatalHandlerComponentImpl.hpp>
 #include <Drv/BlockDriver/BlockDriverImpl.hpp>
+#include <Ref/Manager/ManagerComponentImpl.hpp>
+#include <Ref/Driver/DriverComponentImpl.hpp>
+#include <Ref/Scheduler/SchedulerComponentImpl.hpp>
+
 
 extern Svc::RateGroupDriverImpl rateGroupDriverComp;
 extern Svc::ActiveRateGroupImpl rateGroup1Comp, rateGroup2Comp, rateGroup3Comp;
@@ -53,5 +57,8 @@ extern Ref::RecvBuffImpl recvBuffComp;
 extern Ref::SendBuffImpl sendBuffComp;
 extern Ref::SignalGen SG1 , SG2, SG3, SG4, SG5;
 extern Ref::PingReceiverComponentImpl pingRcvr;
+extern Ref::ManagerComponentImpl manager;
+extern Ref::DriverComponentImpl driver;
+extern Ref::SchedulerComponentImpl scheduler;
 
 #endif
