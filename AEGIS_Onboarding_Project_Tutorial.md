@@ -8,18 +8,18 @@ By the end of this tutorial you should have the following completed:
 - Install F Prime on Linux
 - Develop a simple software state in F Prime
 
-**Table of Contents**
+** Table of Contents**
 
 [TOCM]
 
 [TOC]
 
-##Downloading VirtualBox
+## Downloading VirtualBox
 To download VirtualBox, first go [here](https://www.virtualbox.org/).
 - Download proper VirtualBox for your machine
 - Follow instructions on installer to complete VirtualBox installation.
 
-##Setting up Linux VM
+## Setting up Linux VM
 To properly configure a Linux machine in VirtualBox perform the following:
 1. Follow this [link](http://releases.ubuntu.com/16.04/)
 2. Download the 64-bit PC Desktop image
@@ -62,7 +62,7 @@ To properly configure a Linux machine in VirtualBox perform the following:
 	- Choose location, language, and insert machine info for username, password.. etc.
 	-NOTE: Sometimes VirtualBox will not fill up your whole screen, and you won't be able to see the buttons in the bottom right of the menu. You can either drag the menu over to view the buttons, or you can press the TAB key to navigate through the options on the screen.
 
-##Installing F Prime on Linux
+## Installing F Prime on Linux
 This section will walk you through installing the F Prime flight software framework on your Lunix machine.
 1. Go to the terminal inside of your Linux VM
 2. Enter this command:
